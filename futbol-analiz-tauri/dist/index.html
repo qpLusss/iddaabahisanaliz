@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MERTC Bahis Analizi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&family=Bricolage+Grotesque:wght@600;700;800&display=swap" rel="stylesheet" />
+    <script type="module" crossorigin src="/assets/index-DLhFDGa8.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-B2YWpgmz.css">
+  </head>
+  <body>
+    <div id="app">
+      <header class="topbar">
+        <div class="brand">
+          <img class="brand-logo" src="/logo.ico" alt="MERTC logo" />
+          <div class="brand-copy">
+            <span class="brand-kicker">Veri odaklı analiz masası</span>
+            <h1 class="brand-title">MERTC Bahis Analizi</h1>
+          </div>
+        </div>
+
+        <div class="topbar-actions">
+          <button id="liveHubToggle" class="ghost-btn" type="button">Canlı Takip</button>
+          <button id="settingsToggle" class="ghost-btn" type="button">AI Ayarlar&#305;</button>
+          <button id="themeToggle" class="ghost-btn" type="button">A&ccedil;&#305;k Mod</button>
+        </div>
+      </header>
+
+      <section class="control-panel">
+        <div class="control-row">
+          <label class="sr-only" for="matchUrl">Analiz edilecek ba&#287;lant&#305;</label>
+          <input
+            id="matchUrl"
+            class="text-input"
+            type="url"
+            placeholder="Ge&ccedil;mi&#351; skor, ma&ccedil; detay, g&uuml;nl&uuml;k program veya canl&#305; program ba&#287;lant&#305;s&#305;n&#305; yap&#305;&#351;t&#305;r"
+          />
+          <button id="analyzeBtn" class="primary-btn" type="button">Analiz Et</button>
+          <button id="scanBtn" class="secondary-btn" type="button">Ma&ccedil;lar&#305; Tara</button>
+          <button id="liveScanBtn" class="secondary-btn live-btn" type="button">Canl&#305; Ma&ccedil;lar&#305; Sorgula</button>
+        </div>
+
+        <div class="scan-options-row">
+          <label class="setting-field" for="scanDate">
+            <span>Tarama Tarihi</span>
+            <input id="scanDate" class="text-input" type="date" />
+          </label>
+
+          <label class="setting-field" for="scanLeagueFilter">
+            <span>Lig Filtresi</span>
+            <input
+              id="scanLeagueFilter"
+              class="text-input"
+              type="text"
+              placeholder="&Ouml;rnek: S&uuml;per Lig, Premier League, Serie A"
+            />
+          </label>
+
+          <label class="setting-field scan-threshold-field" for="scanMinConfidence">
+            <span>Minimum G&uuml;ven</span>
+            <input id="scanMinConfidence" class="text-input" type="number" min="42" max="96" step="1" value="74" />
+          </label>
+        </div>
+
+                <div class="scan-policy-row">
+          <label class="setting-field" for="scanLeagueWhitelist">
+            <span>Lig Beyaz Liste</span>
+            <input
+              id="scanLeagueWhitelist"
+              class="text-input"
+              type="text"
+              placeholder="&Ouml;rnek: Premier League, S&uuml;per Lig"
+            />
+          </label>
+
+          <label class="setting-field" for="scanLeagueBlacklist">
+            <span>Lig Kara Liste</span>
+            <input
+              id="scanLeagueBlacklist"
+              class="text-input"
+              type="text"
+              placeholder="&Ouml;rnek: U19, Kadın, Gen&ccedil;ler"
+            />
+          </label>
+        </div>
+
+        <div class="scan-presets-row">
+          <label class="setting-field" for="scanPresetSelect">
+            <span>Lig &#351;ablonu</span>
+            <select id="scanPresetSelect" class="text-input select-input">
+              <option value="">Bir &#351;ablon se&#231;</option>
+            </select>
+          </label>
+
+          <label class="setting-field" for="scanPresetName">
+            <span>&#350;ablon ad&#305;</span>
+            <input
+              id="scanPresetName"
+              class="text-input"
+              type="text"
+              placeholder="&Ouml;rnek: Avrupa &uuml;st ligler"
+            />
+          </label>
+
+          <div class="preset-actions">
+            <button id="savePresetBtn" class="ghost-btn" type="button">Kaydet</button>
+            <button id="deletePresetBtn" class="ghost-btn danger" type="button">Sil</button>
+          </div>
+        </div>
+
+                <div class="scan-flags-row">
+          <label class="switch-row inline-switch" for="sharpModeToggle">
+            <input id="sharpModeToggle" type="checkbox" checked />
+            <span>Keskin Tahmin Modu</span>
+          </label>
+          <label class="switch-row inline-switch" for="autoTrackScanToggle">
+            <input id="autoTrackScanToggle" type="checkbox" />
+            <span>Tarama Sonrası Kuponu Takibe Al</span>
+          </label>
+          <label class="switch-row inline-switch" for="scanTopOnlyToggle">
+            <input id="scanTopOnlyToggle" type="checkbox" />
+            <span>Sadece en iyi 3 maçı göster</span>
+          </label>
+          <label class="switch-row inline-switch" for="liveBestOnlyToggle">
+            <input id="liveBestOnlyToggle" type="checkbox" />
+            <span>Canlıda sadece en güçlü maçı göster</span>
+          </label>
+        </div>
+
+        <p class="settings-note scan-note">
+          Keskin mod daha az ma&ccedil; verir ama filtreyi sertle&#351;tirir. Otomatik takip a&ccedil;&#305;ksa se&ccedil;ilen kupon ayaklar&#305; izlemeye al&#305;n&#305;r.
+        </p>
+
+        <div id="settingsPanel" class="settings-panel hidden">
+          <label class="switch-row" for="aiEnabled">
+            <input id="aiEnabled" type="checkbox" />
+            <span>&#304;kinci AI yorum katman&#305; aktif</span>
+          </label>
+
+          <div class="settings-grid settings-grid-wide">
+            <label class="setting-field" for="providerSelect">
+              <span>Sa&#287;lay&#305;c&#305;</span>
+              <select id="providerSelect" class="text-input select-input">
+                <option value="ollama">Ollama</option>
+                <option value="openai">OpenAI</option>
+              </select>
+            </label>
+
+            <label class="setting-field" for="modelInput">
+              <span>Model</span>
+              <input id="modelInput" class="text-input" type="text" value="qwen2.5:7b" />
+            </label>
+
+            <label class="setting-field" for="baseUrlInput">
+              <span>Endpoint / Base URL</span>
+              <input id="baseUrlInput" class="text-input" type="text" value="http://localhost:11434" />
+            </label>
+
+            <label id="apiKeyField" class="setting-field" for="apiKeyInput">
+              <span>API Anahtar&#305;</span>
+              <input id="apiKeyInput" class="text-input" type="password" placeholder="sk-..." />
+            </label>
+
+            <label class="setting-field" for="footballDataTokenInput">
+              <span>football-data.org Token</span>
+              <input id="footballDataTokenInput" class="text-input" type="password" placeholder="&Uuml;cretsiz token" />
+            </label>
+            <label class="setting-field" for="apiFootballKeyInput">
+              <span>API-Football Key</span>
+              <input id="apiFootballKeyInput" class="text-input" type="password" placeholder="x-apisports-key" />
+            </label>
+            <label class="setting-field" for="apiFootballBaseUrlInput">
+              <span>API-Football Base URL</span>
+              <input id="apiFootballBaseUrlInput" class="text-input" type="text" value="https://v3.football.api-sports.io" />
+            </label>
+          </div>
+
+          <p id="providerNote" class="settings-note">Ollama i&ccedil;in &ouml;nce yerel model haz&#305;r olmal&#305;. &Ouml;rnek: <code>ollama pull qwen2.5:7b</code></p>
+          <p class="settings-note">football-data.org token girersen tek ma&ccedil; analizinde ve tarama sonucu se&ccedil;ilen adaylarda ek son ma&ccedil; + H2H + puan tablosu verisi kullan&#305;l&#305;r. API-Football key girersen sakat/cezal&#305; verisi de modele eklenir.</p>
+        </div>
+
+        <p id="statusText" class="status-text">Haz&#305;r. Ba&#287;lant&#305;y&#305; yap&#305;&#351;t&#305;r veya g&uuml;nl&uuml;k program&#305; tara.</p>
+      </section>
+
+      <main class="dashboard">
+        <section class="panel summary-panel">
+          <div class="panel-head">
+            <div>
+              <h2>Analiz &Ouml;zeti</h2>
+              <p id="aiState" class="panel-subtext">Yerel analiz motoru haz&#305;r.</p>
+            </div>
+            <span id="modeTag" class="mode-badge">Beklemede</span>
+          </div>
+
+          <div id="emptyState" class="empty-state">
+            <p>Hen&uuml;z analiz yok. Yukar&#305;dan ge&ccedil;mi&#351; skor, ma&ccedil; detay veya g&uuml;nl&uuml;k program ba&#287;lant&#305;s&#305; gir.</p>
+          </div>
+          <div id="summaryContent" class="hidden"></div>
+        </section>
+
+        <aside class="panel history-panel">
+          <div class="panel-head">
+            <div>
+              <h2>Tahmin Ge&ccedil;mi&#351;i</h2>
+              <p class="panel-subtext">Takibe ald&#305;&#287;&#305;n ma&#231;lar&#305;n canl&#305; skoru, ma&#231; sonu sonucu ve tahmin isabeti burada izlenir.</p>
+            </div>
+            <div class="history-head-actions"><button id="refreshTrackedBtn" class="ghost-btn" type="button">Takibi Yenile</button><button id="clearHistoryBtn" class="ghost-btn" type="button">Temizle</button></div>
+          </div>
+
+          <div id="historyContent" class="empty-state compact-empty">
+            <p>Hen&uuml;z kay&#305;t yok. &#304;lk analizden sonra ge&ccedil;mi&#351; burada g&ouml;r&uuml;n&uuml;r.</p>
+          </div>
+        </aside>
+      </main>
+      <aside id="liveHubDrawer" class="live-hub-drawer hidden" aria-label="Canlı Takip">
+        <div class="live-hub-shell">
+          <div class="live-hub-head">
+            <div>
+              <h2>Canlı Takip</h2>
+              <p class="panel-subtext">Takibe aldığın maçlar burada kompakt canlı akışta izlenir.</p>
+            </div>
+            <button id="liveHubClose" class="ghost-btn" type="button">Kapat</button>
+          </div>
+          <div id="liveHubContent" class="live-hub-content">
+            <div class="empty-state compact-empty"><p>Takipte maç yok.</p></div>
+          </div>
+        </div>
+      </aside>
+
+      <aside id="liveMatchCenterDrawer" class="live-center-drawer hidden" aria-label="Canlı maç merkezi">
+        <div class="live-center-shell">
+          <div class="live-center-head">
+            <div>
+              <h2>Canlı Maç Merkezi</h2>
+              <p class="panel-subtext">Takipteki maçın canlı akışı burada ayrıntılı görünür.</p>
+            </div>
+            <button id="liveMatchCenterClose" class="ghost-btn" type="button">Kapat</button>
+          </div>
+          <div id="liveMatchCenterContent" class="live-center-content">
+            <div class="empty-state compact-empty"><p>Bir canlı maç seç.</p></div>
+          </div>
+        </div>
+      </aside>
+
+      <div id="busyOverlay" class="busy-overlay hidden" aria-live="polite" aria-busy="true" aria-hidden="true">
+        <div class="busy-card" role="status" aria-label="Sorgu devam ediyor">
+          <div class="busy-spinner" aria-hidden="true">
+            <span class="busy-spinner-ring"></span>
+            <span class="busy-hourglass">⌛</span>
+          </div>
+          <h3 id="busyTitle">Maç sorgulanıyor</h3>
+          <p id="busyText">Sorgu sürüyor, lütfen bekleyin.</p>
+          <p id="busyStep" class="busy-step">Veri işleniyor...</p>
+        </div>
+      </div>
+
+      <div id="goalToastRoot" class="toast-root" aria-live="polite" aria-atomic="false"></div>
+
+      <aside class="signature-credit" aria-label="Tasarlayan ve kodlayan bilgisi"><span class="signature-label">Kodlayan ve tasarlayan</span><strong>MertC</strong></aside>
+    </div>
+
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

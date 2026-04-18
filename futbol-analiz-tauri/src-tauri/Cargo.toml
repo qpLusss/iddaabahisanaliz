@@ -1,0 +1,25 @@
+[package]
+name = "kaptan_futbol_analiz"
+version = "0.1.0"
+description = "Tauri tabanli futbol analiz masaustu uygulamasi"
+authors = ["OpenAI"]
+edition = "2021"
+default-run = "kaptan_futbol_analiz"
+
+[lib]
+name = "app_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "^2.0.0", features = [] }
+
+[dependencies]
+tauri = { version = "^2.0.0", features = [] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+url = "2"
+regex = "1"
+scraper = "0.24"
+reqwest = { version = "0.12", default-features = false, features = ["blocking", "json", "rustls-tls"] }
+chrono = { version = "0.4", default-features = false, features = ["std"] }
+
